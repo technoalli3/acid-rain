@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.alli.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ConsumeWaterMixin"
+  ],
+  "client": [
+    "AcidWaterMixin",
+    "BiomeColourMixin",
+    "KillItem",
+    "BirchSpruceMixin",
+    "WaterBottleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

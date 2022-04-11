@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "acidrain",
+  "version": "${version}",
+
+  "name": "Acid Rain",
+  "description": "A simple yet fun mod that takes Minecraft Vanilla's water and gives it a deadly, acidic twist.",
+  "authors": [
+    "TechnoAlli3"
+  ],
+  "contact": {
+    "homepage": "https://github.com/technoalli3"
+  },
+
+  "license": "All Rights Reserved",
+  "icon": "assets/acidrain/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.alli.acidrain.AcidRainClient"
+    ],
+    "main": [
+      "com.alli.acidrain.AcidRainMain"
+    ]
+  },
+  "mixins": [
+    "acidrain.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
