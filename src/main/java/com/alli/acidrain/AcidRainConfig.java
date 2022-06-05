@@ -38,6 +38,12 @@ public class AcidRainConfig implements Config {
     @Comment(value = "Grass colour")
     int grassColour = 0x434343;
 
+    @Comment(value = "Hurt players?")
+    public boolean hurtPlayers = true;
+
+    @Comment(value = "Hurt non-player entities?")
+    public boolean hurtEntities = true;
+
     @Override
     public String getName() {
         return "main";
