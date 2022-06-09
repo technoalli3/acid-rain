@@ -9,6 +9,7 @@
   "client": [
     "AcidWaterMixin",
     "BiomeColourMixin",
+    "GrassColourMixin",
     "KillItem",
     "BirchSpruceMixin",
     "WaterBottleMixin"

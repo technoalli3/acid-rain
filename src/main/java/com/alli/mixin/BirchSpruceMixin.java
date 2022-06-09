@@ -28,4 +28,16 @@ public class BirchSpruceMixin {
         String hexS = Integer.toHexString(hex);
         return Integer.parseInt(hexS,16);
     }
+
+    /**
+     * @author TechnoAlli3
+     * @reason to customize colours
+     */
+    @Overwrite
+    public static int method_43717() {
+        //Mangrove foliage
+        int hex = AcidRainMain.getFoliageColour();
+        String hexS = Integer.toHexString(hex);
+        return Integer.parseInt(hexS,16);
+    }
 }
