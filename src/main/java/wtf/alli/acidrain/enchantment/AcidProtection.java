@@ -1,4 +1,4 @@
-package com.alli.acidrain.enchantment;
+package wtf.alli.acidrain.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;

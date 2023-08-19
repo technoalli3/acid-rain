@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "wtf.alli",
+    "id": "acidrain",
+    "version": "${version}",
+    "metadata": {
+      "name": "Acid Rain",
+      "description": "A simple yet fun mod that takes Minecraft Vanilla's water and gives it a deadly, acidic twist.",
+      "contributors": {
+        "TechnoAlli3": "Owner"
+      },
+      "contact": {
+        "issues": "https://github.com/technoalli3/acid-rain/issues",
+        "sources": "https://github.com/technoalli3/acid-rain"
+      },
+      "icon": "assets/acidrain/icon.png"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "wtf.alli.acidrain.AcidRainMain",
+      "client": "wtf.alli.acidrain.AcidRainClient"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.19.1"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=7.0.2"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.20"
+      }
+    ]
+  },
+  "mixin": "acidrain.mixins.json"
+}

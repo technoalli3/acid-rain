@@ -1,4 +1,4 @@
-package com.alli.acidrain;
+package wtf.alli.acidrain;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;

@@ -1,4 +1,4 @@
-package com.alli.mixin;
+package wtf.alli.acidrain.mixin;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.potion.PotionUtil;

@@ -1,4 +1,4 @@
-package com.alli.mixin;
+package wtf.alli.acidrain.mixin;
 
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.SalmonEntityModel;

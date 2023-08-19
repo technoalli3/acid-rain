@@ -1,6 +1,6 @@
-package com.alli.mixin;
+package wtf.alli.acidrain.mixin;
 
-import com.alli.acidrain.AcidRainMain;
+import wtf.alli.acidrain.AcidRainMain;
 import net.minecraft.client.color.world.FoliageColors;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
