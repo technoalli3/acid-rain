@@ -1,9 +1,10 @@
-package com.alli.mixin;
+package wtf.alli.acidrain.mixin;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -21,8 +22,11 @@ import static net.minecraft.entity.EntityType.ITEM;
 public abstract class KillItem {
     @Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
 
+    @Shadow public abstract DamageSources getDamageSources();
+
     @Inject(method="move", at=@At("TAIL"))
     private void killEntityInAcid(MovementType movementType, Vec3d movement, CallbackInfo ci) {
+        DamageSources sources = this.getDamageSources();
         Entity entity = ((Entity)(Object)this);
         if (entity.getType()==ITEM) {
             if(entity.isTouchingWaterOrRain()) {
@@ -30,7 +34,7 @@ public abstract class KillItem {
                 if(!key.contains("'item.acidrain.raw_nightmare_fish'")){
                     if(!key.contains("boat")) {
                         this.playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 1F, 1F);
-                        entity.damage(DamageSource.DROWN, Integer.MAX_VALUE);
+                        entity.damage(sources.drown(), Integer.MAX_VALUE);
                     }
                 }
             }
@@ -38,11 +42,11 @@ public abstract class KillItem {
             int posY = entity.getBlockY();
             int posZ = entity.getBlockZ();
             BlockPos pos = new BlockPos(posX, posY, posZ);
-            BlockState bstate = ((Entity) (Object) this).getEntityWorld().getBlockState(pos);//get blockstate
+            BlockState bstate = ((Entity) (Object) this).getWorld().getBlockState(pos);//get blockstate
             String state = String.valueOf(bstate);
             if(state.contains("minecraft:water_cauldron")) {
                 this.playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 1F, 1F);
-                entity.damage(DamageSource.DROWN, Integer.MAX_VALUE);
+                entity.damage(sources.drown(), Integer.MAX_VALUE);
             }
         }
     }

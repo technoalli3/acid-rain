@@ -1,4 +1,4 @@
-package com.alli.mixin;
+package wtf.alli.acidrain.mixin;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -7,7 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,11 +22,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;
 
-import static com.alli.acidrain.AcidRainMain.ACID_PROTECTION;
-import static com.alli.acidrain.AcidRainMain.CONFIG;
+import static wtf.alli.acidrain.AcidRainMain.ACID_PROTECTION;
+import static wtf.alli.acidrain.AcidRainMain.CONFIG;
 import static net.minecraft.enchantment.Enchantments.UNBREAKING;
 import static net.minecraft.entity.EntityType.BOAT;
-import static net.minecraft.entity.EntityType.PLAYER;
 
 @Mixin(LivingEntity.class)
 public abstract class AcidWaterMixin extends Entity {
@@ -34,23 +33,26 @@ public abstract class AcidWaterMixin extends Entity {
     @Shadow
     public abstract boolean canFreeze();
 
+
     Random r = new Random();
     int timerRain = 0;
     int timerInAcid = 0;
 
     public AcidWaterMixin(EntityType<?> type, World world) {
+
         super(type, world);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void CheckWaterAcid(CallbackInfo ci) {
+        DamageSources sources = new DamageSources(this.getWorld().getRegistryManager());
         // Touching water
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             if (this.isTouchingWaterOrRain()) {
                 if (this.isTouchingWater()) {//is in water
                     //noinspection ConstantConditions
                     if ((Object)this instanceof PlayerEntity player) {//is a player
-                        if(CONFIG.hurtPlayers) {
+                        if(CONFIG.main.hurtPlayers) {
                             PlayerAbilities checker = (player.getAbilities());
                             if (!checker.creativeMode) {//not creative mode
                                 if (player.hasStackEquipped(EquipmentSlot.CHEST)) {//has chest armour
@@ -86,18 +88,18 @@ public abstract class AcidWaterMixin extends Entity {
                                         }
                                     } else {//not enchanted chest armour
                                         this.playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 1F, 1F);
-                                        this.damage(DamageSource.DROWN, Integer.MAX_VALUE);
+                                        this.damage(sources.drown(), Integer.MAX_VALUE);
                                     }
                                 } else {//no chest armour
                                     this.playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 1F, 1F);
-                                    this.damage(DamageSource.DROWN, Integer.MAX_VALUE);
+                                    this.damage(sources.drown(), Integer.MAX_VALUE);
                                 }
                             }//not creative mode
                         }
                     } else {//just entity
-                        if(CONFIG.hurtEntities) {
+                        if(CONFIG.main.hurtEntities) {
                             if (this.getType() != BOAT) {//not a boat
-                                this.damage(DamageSource.DROWN, Integer.MAX_VALUE);
+                                this.damage(sources.drown(), Integer.MAX_VALUE);
                             }
                         }
                     }
@@ -107,7 +109,7 @@ public abstract class AcidWaterMixin extends Entity {
                 } else {//is in rain
                     //noinspection ConstantConditions
                     if ((Object)this instanceof PlayerEntity player) {//is a player
-                        if(CONFIG.hurtPlayers) {
+                        if(CONFIG.main.hurtPlayers) {
                             PlayerAbilities checker = player.getAbilities();
                             if (!checker.creativeMode) {//not creative mode
                                 if (player.hasStackEquipped(EquipmentSlot.HEAD)) {//has helmet
@@ -141,14 +143,14 @@ public abstract class AcidWaterMixin extends Entity {
                                         stack.setCount(0);
                                     }
                                 } else {//no helmet
-                                    this.damage(DamageSource.ON_FIRE, 1F);
+                                    this.damage(sources.onFire(), 1F);
                                 }
                             }//end not-creative statement
                         }
                     } else {//just entity
-                        if(CONFIG.hurtEntities) {
+                        if(CONFIG.main.hurtEntities) {
                             if (this.getType() != BOAT) {//not a boat
-                                this.damage(DamageSource.ON_FIRE, 1F);
+                                this.damage(sources.onFire(), 1F);
                             }
                         }
                     }
@@ -157,14 +159,14 @@ public abstract class AcidWaterMixin extends Entity {
 
 
 
-            if(CONFIG.hurtPlayers) {
+            if(CONFIG.main.hurtPlayers) {
                 //noinspection ConstantConditions
                 if ((Object) this instanceof PlayerEntity player) {//is player
                     int posX = this.getBlockX();
                     int posY = this.getBlockY();
                     int posZ = this.getBlockZ();
                     BlockPos pos = new BlockPos(posX, posY, posZ);
-                    BlockState bstate = this.getEntityWorld().getBlockState(pos);//get blockstate
+                    BlockState bstate = this.getWorld().getBlockState(pos);//get blockstate
                     String state = String.valueOf(bstate);
                     if (state.contains("minecraft:water_cauldron")) {
                         PlayerAbilities checker = player.getAbilities();
@@ -187,11 +189,11 @@ public abstract class AcidWaterMixin extends Entity {
                                     }
                                 } else {//not enchanted chest armour
                                     this.playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 1F, 1F);
-                                    this.damage(DamageSource.DROWN, Integer.MAX_VALUE);
+                                    this.damage(sources.drown(), Integer.MAX_VALUE);
                                 }
                             } else {//no chest armour
                                 this.playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 1F, 1F);
-                                this.damage(DamageSource.DROWN, Integer.MAX_VALUE);
+                                this.damage(sources.drown(), Integer.MAX_VALUE);
                             }
                         }
                     }

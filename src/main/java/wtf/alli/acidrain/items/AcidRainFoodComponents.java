@@ -1,4 +1,4 @@
-package com.alli.acidrain.items;
+package wtf.alli.acidrain.items;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;

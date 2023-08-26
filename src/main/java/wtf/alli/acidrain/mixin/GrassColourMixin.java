@@ -1,4 +1,4 @@
-package com.alli.mixin;
+package wtf.alli.acidrain.mixin;
 
 import net.minecraft.world.biome.BiomeEffects;
 import org.spongepowered.asm.mixin.Mixin;
